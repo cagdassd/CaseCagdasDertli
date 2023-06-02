@@ -20,21 +20,37 @@ namespace Business.Concrete
 			_productDal = productDal;	
 		}
 
-		public ApiResponse<List<ProductDto>> GetAll()
+		public List<ProductDto> GetAll()
 		{
 
 			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
 			response.Data = _productDal.GetProductDetails();
-
-			return response;
+			
+			return _productDal.GetProductDetails();
 		}
 
-		public ApiResponse<List<ProductDto>> GetAllByCategory(string categoryName)
+		public ApiResponse<List<ProductDto>> GetAll2()
+		{
+			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
+			response.Data = _productDal.GetProductDetails();
+			response.Errorcode = "200";
+			response.Status = 200;
+			response.Message = "OK";
+			return response;
+			
+		}
+
+		public List<ProductDto> GetAllByCategory(string categoryName)
 		{
 			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
 			response.Data =_productDal.GetProductDetails(categoryName);
+			
+			return _productDal.GetProductDetails(categoryName);
+		}
 
-			return response;
+		public ApiResponse<List<ProductDto>> GetAllByCategory2(string categoryName)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
