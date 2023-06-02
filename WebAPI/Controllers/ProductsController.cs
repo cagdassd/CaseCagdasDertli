@@ -5,6 +5,8 @@ using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Aspects.Autofac;
+using WebAPI.Caching;
 
 namespace WebAPI.Controllers
 {
@@ -14,26 +16,40 @@ namespace WebAPI.Controllers
 	{
 		ProductManager pm = new ProductManager(new EfProductDal());
 
-		private readonly ILogger<ProductsController> logger;
+		private readonly ILogger<ProductsController> _logger;
+		private readonly IMapper _mapper;
 
-		public ProductsController(ILogger<ProductsController> Logger)
+		public ProductsController(IMapper mapper, ILogger<ProductsController> logger)
 		{
-			logger = Logger;
+
+			_logger = logger;
+			_mapper = mapper;
 		}
 
+
+		[CacheAspect]
 		[HttpGet("getall")]
-		public IActionResult GetAll(string CategoryName)
+		public IActionResult GetAll( string? CategoryName)
 		{
-			logger.LogCritical("GetAll metodu çağrıldı");
+			_logger.LogCritical("GetAll metodu çağrıldı");
+
+
 			
-			if (String.IsNullOrEmpty(CategoryName))
+
+			if (!string.IsNullOrEmpty(CategoryName))
 			{
 				var result = pm.GetAllByCategory(CategoryName);
-				return Ok(result);
+				
+				var productInfo= _mapper.Map<ProductDto>(result);
+
+				return Ok(productInfo);
 			}
 			else
 			{
 				var result = pm.GetAll();
+
+				var productInfo = _mapper.Map<ProductDto>(result);
+
 				return Ok(result);
 			}
 		}
@@ -42,3 +58,4 @@ namespace WebAPI.Controllers
 
 	}
 }
+ 

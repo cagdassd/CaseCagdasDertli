@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -12,20 +13,28 @@ namespace Business.Concrete
 	public class ProductManager : IProductService
 	{
 		IProductDal _productDal;
+		
 
 		public ProductManager(IProductDal productDal)
 		{
 			_productDal = productDal;	
 		}
 
-		public List<ProductDto> GetAll()
+		public ApiResponse<List<ProductDto>> GetAll()
 		{
-			return _productDal.GetProductDetails();
+
+			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
+			response.Data = _productDal.GetProductDetails();
+
+			return response;
 		}
 
-		public List<ProductDto> GetAllByCategory(string categoryName)
+		public ApiResponse<List<ProductDto>> GetAllByCategory(string categoryName)
 		{
-			return _productDal.GetProductDetails(categoryName);		
+			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
+			response.Data =_productDal.GetProductDetails(categoryName);
+
+			return response;
 		}
 	}
 }

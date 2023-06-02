@@ -21,15 +21,21 @@ namespace WebAPI.Controllers
 		}
 
 		[HttpPost("createorderrequest")]
-		public IActionResult Add(CreateOrderRequest cor)
+		public IActionResult Add(List<CreateOrderRequest> cor)
 		{
 			logger.LogCritical("Order İşlemi Başlatıldı");
 
-			var AddOrder = orderManager.AddOrder(cor);
+			List<int> orderDetailIds = new List<int>();
 
-			var OrderDetailId = orderDetailManager.AddOrderDetail(cor,AddOrder);
+			foreach (var item in cor)
+			{
+				var AddOrder = orderManager.AddOrder(item);
+				var OrderDetailId = orderDetailManager.AddOrderDetail(item, AddOrder);
+
+				orderDetailIds.Add(OrderDetailId);
+			}
 			
-			return Ok(OrderDetailId);
+			return Ok(orderDetailIds.ToArray());
 		}
 
 	}

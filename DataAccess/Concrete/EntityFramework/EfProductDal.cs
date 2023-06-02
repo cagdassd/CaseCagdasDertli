@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using DataAccess.Abstract;
 using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +13,6 @@ namespace DataAccess.Concrete.EntityFramework
 {
 	public class EfProductDal : IProductDal
 	{
-		private readonly IMapper _mapper;
 
 		public EfProductDal()
 		{

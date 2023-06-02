@@ -2,8 +2,11 @@
 
 
 
-using Entities.MapperProfiles;
+
+using Microsoft.Extensions.Caching.Memory;
 using Serilog;
+using WebAPI.Caching;
+using WebAPI.Caching.Microsoft;
 using WebAPI.Loging;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,8 +30,13 @@ builder.Services.AddLogging(i =>
 	
 	i.AddProvider(new MyCustomLoggerFactory());
 });
+//builder.Services.AddMemoryCache();
+//builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
 
-builder.Services.AddAutoMapper(typeof(ProductProfile));
+
+
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
