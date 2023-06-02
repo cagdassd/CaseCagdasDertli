@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-	public interface IOrderService
+	public interface IOrderDetailService
 	{
-		public int AddOrder(CreateOrderRequest cor);
+		public int AddOrderDetail(CreateOrderRequest cor,int productId);
 	}
 }

@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using AutoMapper;
+using DataAccess.Abstract;
 using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,10 +13,20 @@ namespace DataAccess.Concrete.EntityFramework
 {
 	public class EfProductDal : IProductDal
 	{
-	
+		private readonly IMapper _mapper;
+
+		public EfProductDal()
+		{
+
+		}
 
 		public List<ProductDto> GetProductDetails()
 		{
+			
+
+
+
+
 			using (Context context = new Context())
 			{
 				var result = from p in context.Products
@@ -27,9 +38,13 @@ namespace DataAccess.Concrete.EntityFramework
 								 Unit = p.Unit,
 								 UnitPrice = p.UnitPrice
 							 };
+
+
 				return result.ToList();
 			}
 		}
+
+
 
 
 

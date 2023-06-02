@@ -9,7 +9,7 @@ namespace DataAccess.Abstract
 {
 	public interface IOrderDal
 	{
-		public void AddOrder(CreateOrderRequest cor);
+		public int AddOrder(CreateOrderRequest cor);
 
 
 

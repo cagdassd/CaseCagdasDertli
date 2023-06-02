@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Abstract
+namespace DataAccess.Abstract
 {
-	public interface IOrderService
+	public interface IOrderDetailDal
 	{
-		public int AddOrder(CreateOrderRequest cor);
+		public int AddOrder(CreateOrderRequest cor,int productId);
+
+
 	}
 }

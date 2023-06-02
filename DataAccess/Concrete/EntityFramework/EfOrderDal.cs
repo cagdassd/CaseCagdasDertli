@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
 	public class EfOrderDal : IOrderDal
 	{
-		public void AddOrder(CreateOrderRequest cor)
+		public int AddOrder(CreateOrderRequest cor)
 		{
 			using (Context context = new Context())
 			{
@@ -26,17 +26,7 @@ namespace DataAccess.Concrete.EntityFramework
 				addedEntity.State = EntityState.Added;
 				context.SaveChanges();
 
-
-				OrderDetail orderDetail = new OrderDetail();
-				orderDetail.UnitPrice = cor.UnitPrice;
-				orderDetail.ProductId = cor.ProductId;
-				orderDetail.OrderId = order.Id;
-
-
-
-				var addedEntity2 = context.Entry(orderDetail);
-				addedEntity2.State = EntityState.Added;
-				context.SaveChanges();
+				return order.Id;
 			}
 		}
 	}

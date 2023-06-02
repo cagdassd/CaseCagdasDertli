@@ -18,9 +18,9 @@ namespace Business.Concrete
 			_orderDal = orderDal;
 		}
 
-		public void AddOrder(CreateOrderRequest cor)
+		public int AddOrder(CreateOrderRequest cor)
 		{
-			_orderDal.AddOrder(cor);
+			return _orderDal.AddOrder(cor);
 		}
 	}
 }
