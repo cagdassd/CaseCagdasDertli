@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{3FE671B4-AB3F-4B70-802A-64F0CF378682}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{997D0BFD-9E1E-49E7-915F-9282717E58FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQCunsomer", "RabbitMQCunsomer\RabbitMQCunsomer.csproj", "{AAEE7CD5-6B01-488F-88F9-B931DC4AECA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{3FE671B4-AB3F-4B70-802A-64F0CF378682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FE671B4-AB3F-4B70-802A-64F0CF378682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FE671B4-AB3F-4B70-802A-64F0CF378682}.Release|Any CPU.Build.0 = Release|Any CPU
-		{997D0BFD-9E1E-49E7-915F-9282717E58FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{997D0BFD-9E1E-49E7-915F-9282717E58FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{997D0BFD-9E1E-49E7-915F-9282717E58FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{997D0BFD-9E1E-49E7-915F-9282717E58FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAEE7CD5-6B01-488F-88F9-B931DC4AECA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAEE7CD5-6B01-488F-88F9-B931DC4AECA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAEE7CD5-6B01-488F-88F9-B931DC4AECA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAEE7CD5-6B01-488F-88F9-B931DC4AECA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,8 +8,10 @@ namespace Entities.Concrete
 {
 	public enum Status
 	{
-		Success,
-		Failed
+
+		Success = 200,
+		Failed = 500
+		
 	}
 
 	public class ApiResponse<T>

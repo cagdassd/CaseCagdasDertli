@@ -29,7 +29,7 @@ namespace Business.Concrete
 			if (!response.Data.IsNullOrEmpty())
 			{
 				response.ResultMessage = "Ürünler Başarıyla Listelendi";
-				response.Status = Status.Success;
+				response.Status =  Status.Success;
 				response.ErrorCode = "200";
 				return response;
 			}

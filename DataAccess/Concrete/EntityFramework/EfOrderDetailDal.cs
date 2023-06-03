@@ -16,13 +16,6 @@ namespace DataAccess.Concrete.EntityFramework
 		{
 			using (Context context = new Context())
 			{
-				/*
-				OrderDetail orderDetail = new OrderDetail();
-				orderDetail.UnitPrice = cor.UnitPrice;
-				orderDetail.ProductId = cor.ProductId;
-				orderDetail.OrderId = productId;
-				*/
-
 				orderDetail.OrderId= orderId;
 				var addedEntity2 = context.Entry(orderDetail);
 				addedEntity2.State = EntityState.Added;

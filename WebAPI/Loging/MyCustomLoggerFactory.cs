@@ -13,7 +13,6 @@
 		}
 	}
 
-
 	public class MyCustomLogger : ILogger
 	{
 		public IDisposable? BeginScope<TState>(TState state) where TState : notnull

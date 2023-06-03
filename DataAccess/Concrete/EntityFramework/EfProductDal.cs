@@ -14,17 +14,8 @@ namespace DataAccess.Concrete.EntityFramework
 	public class EfProductDal : IProductDal
 	{
 
-		public EfProductDal()
-		{
-
-		}
-
 		public List<ProductDto> GetProductDetails()
 		{
-			
-
-
-
 
 			using (Context context = new Context())
 			{
@@ -42,11 +33,6 @@ namespace DataAccess.Concrete.EntityFramework
 				return result.ToList();
 			}
 		}
-
-
-
-
-
 
 		public List<ProductDto> GetProductDetails(string CategoryName)
 		{

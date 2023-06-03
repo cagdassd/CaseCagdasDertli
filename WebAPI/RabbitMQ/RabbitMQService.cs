@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Entities.Concrete;
+using Entities.DTOs;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
 
@@ -13,7 +16,7 @@ namespace WebAPI.RabbitMQ
 			_rabbitMQConnectionUrl = rabbitMQConnectionUrl;
 		}
 
-		public void SendMailMessage(string receiver, string subject, string content)
+		public void SendMailMessage(MailModel mailModel)
 		{
 			var factory = new ConnectionFactory
 			{
@@ -23,19 +26,24 @@ namespace WebAPI.RabbitMQ
 			using (var connection = factory.CreateConnection())
 			using (var channel = connection.CreateModel())
 			{
-				channel.QueueDeclare(queue: "mail_queue", durable: false, exclusive: false, autoDelete: false, arguments: null);
+				channel.QueueDeclare(queue: "mail_queue", durable: true, exclusive: false, autoDelete: false, arguments: null);
 
-				var message = new
-				{
-					Receiver = receiver,
-					Subject = subject,
-					Content = content
-				};
+				var message = mailModel;
+				
 
 				var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
 				channel.BasicPublish(exchange: "", routingKey: "mail_queue", basicProperties: null, body: body);
 			}
 		}
-	}
+
+
+
+
+		
+
+
+
+		}
+
 }

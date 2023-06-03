@@ -14,7 +14,6 @@ namespace DataAccess.Concrete
 		{
 			optionsBuilder.UseSqlServer("server=DESKTOP-G69889M;database=Case;integrated security=true;TrustServerCertificate=true;");
 		}
-
 		public DbSet<Order> Orders{ get; set; }
 		public DbSet<OrderDetail> OrderDetails { get; set; }
 		public DbSet<Product> Products { get; set; }

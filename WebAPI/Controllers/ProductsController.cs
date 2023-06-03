@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using Business.Concrete;
-using Core.Aspects.Autofac.Caching;
 using DataAccess.Concrete.EntityFramework;
-using Entities.Concrete;
-using Entities.DTOs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -32,27 +28,28 @@ namespace WebAPI.Controllers
 
 
 		[HttpGet("getall")]
-		public IActionResult GetAll( string? CategoryName)
+		public IActionResult GetAll(string? CategoryName)
 		{
-			_logger.LogCritical("GetAll metodu çağrıldı");
+			_logger.LogInformation("GetAll metodu çağrıldı");
 			string cacheKey = "AllProducts";
 			if (_cache.TryGetValue(cacheKey, out var cachedResult))
 			{
-				// Önbellekte veri varsa, önbellekten dönün
+				_logger.LogInformation("Ürünler Önbellekten Listelendi");
 				return Ok(cachedResult);
+
 			}
 			if (!string.IsNullOrEmpty(CategoryName))
 			{
 				var result = pm.GetAllByCategory(CategoryName);
 
 				_cache.Set(cacheKey, result, TimeSpan.FromMinutes(60));
-
+				_logger.LogInformation("Ürünler Listelendi");
 				return Ok(result);
 			}
 			else
 			{
 				var result = pm.GetAll();
-
+				_logger.LogInformation("Ürünler Listelendi");
 				_cache.Set(cacheKey, result, TimeSpan.FromMinutes(60));
 
 				return Ok(result);
@@ -63,4 +60,3 @@ namespace WebAPI.Controllers
 
 	}
 }
- 
