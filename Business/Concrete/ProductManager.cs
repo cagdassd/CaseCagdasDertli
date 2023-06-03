@@ -1,7 +1,10 @@
 ﻿using Business.Abstract;
+using Core.Aspects.Autofac.Caching;
+using Core.CrossCuttingConcerns.Caching;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +16,28 @@ namespace Business.Concrete
 	public class ProductManager : IProductService
 	{
 		IProductDal _productDal;
-		
+		ICacheManager _cacheManager;
 
-		public ProductManager(IProductDal productDal)
+		public ProductManager(IProductDal productDal/*, ICacheManager cacheManager*/)
 		{
 			_productDal = productDal;	
+			//_cacheManager = _cacheManager;
 		}
 
+		[CacheAspect]
 		public List<ProductDto> GetAll()
 		{
+			/*
+			if (_cacheManager.IsAdd("GetAll"))
+			{
+				return _cacheManager.Get<List<ProductDto>>("GetAll");
+			}
+			else
+			{
+				_cacheManager.Add("GetAll", List<ProductDto>, 25);
+			}
+			*/
+
 
 			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
 			response.Data = _productDal.GetProductDetails();
@@ -39,7 +55,6 @@ namespace Business.Concrete
 			return response;
 			
 		}
-
 		public List<ProductDto> GetAllByCategory(string categoryName)
 		{
 			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();

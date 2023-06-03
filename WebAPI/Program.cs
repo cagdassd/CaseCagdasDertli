@@ -3,13 +3,25 @@
 
 
 
+using Autofac;
+using Autofac.Core;
+using Autofac.Extensions.DependencyInjection;
+using Business.DependencyResolvers;
+using Core.DependencyResolvers;
+using Core.Extensions;
+using Core.Utilities.IoC;
 using Microsoft.Extensions.Caching.Memory;
 using Serilog;
-using WebAPI.Caching;
-using WebAPI.Caching.Microsoft;
 using WebAPI.Loging;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//IoC -- autofac
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+	.ConfigureContainer<ContainerBuilder>(builder =>
+	{
+		builder.RegisterModule(new AutofacBusinessModule());
+	});
 
 
 builder.Host.UseSerilog();
@@ -30,10 +42,15 @@ builder.Services.AddLogging(i =>
 	
 	i.AddProvider(new MyCustomLoggerFactory());
 });
-//builder.Services.AddMemoryCache();
-//builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
 
 
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
+
+
+builder.Services.AddDependencyResolvers(new ICoreModule[] {
+			   new CoreModule()
+			});
 
 
 builder.Services.AddAutoMapper(typeof(Program));
