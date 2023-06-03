@@ -1,5 +1,7 @@
-﻿using Business.Concrete;
+﻿using AutoMapper;
+using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +16,12 @@ namespace WebAPI.Controllers
 		OrderManager orderManager = new OrderManager(new EfOrderDal());
 		OrderDetailManager orderDetailManager = new OrderDetailManager(new EfOrderDetailDal());
 		private readonly ILogger<ProductsController> logger;
+		private readonly IMapper _mapper;
 
-		public OrdersController(ILogger<ProductsController> Logger)
+		public OrdersController(ILogger<ProductsController> Logger, IMapper mapper)
 		{
 			logger = Logger;
+			_mapper = mapper;
 		}
 
 		[HttpPost("createorderrequest")]
@@ -29,8 +33,12 @@ namespace WebAPI.Controllers
 
 			foreach (var item in cor)
 			{
-				var AddOrder = orderManager.AddOrder(item);
-				var OrderDetailId = orderDetailManager.AddOrderDetail(item, AddOrder);
+
+				var orderInfo = _mapper.Map<Order>(item);
+				var AddOrder = orderManager.AddOrder(orderInfo);
+
+				var orderDetailInfo = _mapper.Map<OrderDetail>(item);
+				var OrderDetailId = orderDetailManager.AddOrderDetail(orderDetailInfo, AddOrder);
 
 				orderDetailIds.Add(OrderDetailId);
 			}

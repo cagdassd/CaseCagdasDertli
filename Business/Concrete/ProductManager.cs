@@ -16,14 +16,17 @@ namespace Business.Concrete
 	public class ProductManager : IProductService
 	{
 		IProductDal _productDal;
-		ICacheManager _cacheManager;
+		private readonly ICacheManager _cacheManager;
 
 		public ProductManager(IProductDal productDal/*, ICacheManager cacheManager*/)
 		{
 			_productDal = productDal;	
-			//_cacheManager = _cacheManager;
+//			_cacheManager = cacheManager;
 		}
 
+		
+
+		
 		[CacheAspect]
 		public List<ProductDto> GetAll()
 		{
@@ -38,12 +41,15 @@ namespace Business.Concrete
 			}
 			*/
 
+			
+
 
 			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
 			response.Data = _productDal.GetProductDetails();
 			
 			return _productDal.GetProductDetails();
 		}
+
 
 		public ApiResponse<List<ProductDto>> GetAll2()
 		{

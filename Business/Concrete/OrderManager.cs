@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,10 @@ namespace Business.Concrete
 			_orderDal = orderDal;
 		}
 
-		public int AddOrder(CreateOrderRequest cor)
+		public int AddOrder(Order order)
 		{
-			return _orderDal.AddOrder(cor);
+
+			return _orderDal.AddOrder(order);
 		}
 	}
 }

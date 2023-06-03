@@ -17,11 +17,11 @@ using WebAPI.Loging;
 var builder = WebApplication.CreateBuilder(args);
 
 //IoC -- autofac
-builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
-	.ConfigureContainer<ContainerBuilder>(builder =>
-	{
-		builder.RegisterModule(new AutofacBusinessModule());
-	});
+//builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+	//.ConfigureContainer<ContainerBuilder>(builder =>
+	//{
+		//builder.RegisterModule(new AutofacBusinessModule());
+	//});
 
 
 builder.Host.UseSerilog();
@@ -42,15 +42,10 @@ builder.Services.AddLogging(i =>
 	
 	i.AddProvider(new MyCustomLoggerFactory());
 });
-
-
 builder.Services.AddMemoryCache();
-builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
-
-
-builder.Services.AddDependencyResolvers(new ICoreModule[] {
-			   new CoreModule()
-			});
+//builder.Services.AddDependencyResolvers(new ICoreModule[] {
+		//	   new CoreModule()
+	//		});
 
 
 builder.Services.AddAutoMapper(typeof(Program));
@@ -69,5 +64,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();

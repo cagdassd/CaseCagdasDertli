@@ -6,6 +6,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace WebAPI.Controllers
 {
@@ -17,13 +18,17 @@ namespace WebAPI.Controllers
 
 		private readonly ILogger<ProductsController> _logger;
 		private readonly IMapper _mapper;
+		private readonly IMemoryCache _cache;
 
-		public ProductsController(IMapper mapper, ILogger<ProductsController> logger)
+
+		public ProductsController(IMapper mapper, ILogger<ProductsController> logger, IMemoryCache cache)
 		{
 
 			_logger = logger;
 			_mapper = mapper;
+			_cache = cache;
 		}
+
 
 
 
@@ -31,13 +36,20 @@ namespace WebAPI.Controllers
 		public IActionResult GetAll( string? CategoryName)
 		{
 			_logger.LogCritical("GetAll metodu çağrıldı");
+			string cacheKey = "AllProducts";
+			if (_cache.TryGetValue(cacheKey, out var cachedResult))
+			{
+				// Önbellekte veri varsa, önbellekten dönün
+				return Ok(cachedResult);
+			}
 
-			
+
 
 			if (!string.IsNullOrEmpty(CategoryName))
 			{
 				var result = pm.GetAllByCategory(CategoryName);
-				
+
+				_cache.Set(cacheKey, result, TimeSpan.FromMinutes(60));
 				//var productInfo= _mapper.Map<ProductDto>(result);
 
 				return Ok(result);
@@ -46,6 +58,7 @@ namespace WebAPI.Controllers
 			{
 				var result = pm.GetAll();
 
+				_cache.Set(cacheKey, result, TimeSpan.FromMinutes(60));
 				//var productInfo = _mapper.Map<ProductDto>(result);
 
 				return Ok(result);

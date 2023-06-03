@@ -1,4 +1,5 @@
-﻿using Entities.DTOs;
+﻿using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace DataAccess.Abstract
 {
 	public interface IOrderDetailDal
 	{
-		public int AddOrder(CreateOrderRequest cor,int productId);
+		public int AddOrder(OrderDetail orderDetail,int productId);
 
 
 	}
