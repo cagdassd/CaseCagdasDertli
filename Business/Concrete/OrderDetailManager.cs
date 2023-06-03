@@ -21,9 +21,9 @@ namespace Business.Concrete
 
 
 
-		public int AddOrderDetail(OrderDetail orderDetail, int ProductId)
+		public int AddOrderDetail(OrderDetail orderDetail, int orderId)
 		{
-			return _orderDetailDal.AddOrder(orderDetail, ProductId);
+			return _orderDetailDal.AddOrder(orderDetail, orderId);
 		}
 	}
 }

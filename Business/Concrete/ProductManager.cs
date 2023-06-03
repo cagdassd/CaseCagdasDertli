@@ -1,77 +1,68 @@
 ﻿using Business.Abstract;
-using Core.Aspects.Autofac.Caching;
-using Core.CrossCuttingConcerns.Caching;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
-using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Business.Concrete
 {
 	public class ProductManager : IProductService
 	{
 		IProductDal _productDal;
-		private readonly ICacheManager _cacheManager;
 
-		public ProductManager(IProductDal productDal/*, ICacheManager cacheManager*/)
+		public ProductManager(IProductDal productDal)
 		{
-			_productDal = productDal;	
-//			_cacheManager = cacheManager;
+			_productDal = productDal;
+
+
 		}
 
-		
 
-		
-		[CacheAspect]
-		public List<ProductDto> GetAll()
+
+
+
+		public ApiResponse<List<ProductDto>> GetAll()
 		{
-			/*
-			if (_cacheManager.IsAdd("GetAll"))
+			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
+			response.Data = _productDal.GetProductDetails();
+
+			if (!response.Data.IsNullOrEmpty())
 			{
-				return _cacheManager.Get<List<ProductDto>>("GetAll");
+				response.ResultMessage = "Ürünler Başarıyla Listelendi";
+				response.Status = Status.Success;
+				response.ErrorCode = "200";
+				return response;
 			}
 			else
 			{
-				_cacheManager.Add("GetAll", List<ProductDto>, 25);
+				response.ResultMessage = "Ürünler Listelenirken Hata Oluştu";
+				response.Status = Status.Failed;
+				response.ErrorCode = "500";
+				return response;
 			}
-			*/
-
-			
-
-
-			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
-			response.Data = _productDal.GetProductDetails();
-			
-			return _productDal.GetProductDetails();
 		}
 
-
-		public ApiResponse<List<ProductDto>> GetAll2()
+		public ApiResponse<List<ProductDto>> GetAllByCategory(string categoryName)
 		{
 			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
 			response.Data = _productDal.GetProductDetails();
-			response.Errorcode = "200";
-			response.Status = 200;
-			response.Message = "OK";
-			return response;
-			
-		}
-		public List<ProductDto> GetAllByCategory(string categoryName)
-		{
-			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
-			response.Data =_productDal.GetProductDetails(categoryName);
-			
-			return _productDal.GetProductDetails(categoryName);
+
+			if (!response.Data.IsNullOrEmpty())
+			{
+				response.ResultMessage = "Ürünler Kategoriye Göre Başarıyla Listelendi";
+				response.Status = Status.Success;
+				response.ErrorCode = "200";
+				return response;
+			}
+			else
+			{
+				response.ResultMessage = "Ürünler Listelenirken Hata Oluştu";
+				response.Status = Status.Failed;
+				response.ErrorCode = "500";
+				return response;
+			}
 		}
 
-		public ApiResponse<List<ProductDto>> GetAllByCategory2(string categoryName)
-		{
-			throw new NotImplementedException();
-		}
+
 	}
 }

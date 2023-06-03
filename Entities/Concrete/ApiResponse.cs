@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
-	public class ApiResponse<T>
+	public enum Status
 	{
-		public T Data;
-		public string Errorcode;
-		public string Message;
-		public int Status;
-
-
-		
+		Success,
+		Failed
 	}
 
-	public enum ApiResponseStatusEnum
+	public class ApiResponse<T>
 	{
-		Success =200,
-		Fail =500
+		public Status Status { get; set; }
+		public string ResultMessage { get; set; }
+		public string ErrorCode { get; set; }
+		public T Data { get; set; }
 	}
 }

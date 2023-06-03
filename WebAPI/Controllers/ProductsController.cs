@@ -31,7 +31,6 @@ namespace WebAPI.Controllers
 
 
 
-
 		[HttpGet("getall")]
 		public IActionResult GetAll( string? CategoryName)
 		{
@@ -42,24 +41,19 @@ namespace WebAPI.Controllers
 				// Önbellekte veri varsa, önbellekten dönün
 				return Ok(cachedResult);
 			}
-
-
-
 			if (!string.IsNullOrEmpty(CategoryName))
 			{
-				var result = pm.GetAllByCategory(CategoryName);
+				var result = pm.GetAllByCategory2(CategoryName);
 
 				_cache.Set(cacheKey, result, TimeSpan.FromMinutes(60));
-				//var productInfo= _mapper.Map<ProductDto>(result);
 
 				return Ok(result);
 			}
 			else
 			{
-				var result = pm.GetAll();
+				var result = pm.GetAll2();
 
 				_cache.Set(cacheKey, result, TimeSpan.FromMinutes(60));
-				//var productInfo = _mapper.Map<ProductDto>(result);
 
 				return Ok(result);
 			}

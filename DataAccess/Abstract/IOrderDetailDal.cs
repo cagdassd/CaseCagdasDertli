@@ -10,7 +10,7 @@ namespace DataAccess.Abstract
 {
 	public interface IOrderDetailDal
 	{
-		public int AddOrder(OrderDetail orderDetail,int productId);
+		public int AddOrder(OrderDetail orderDetail,int orderId);
 
 
 	}

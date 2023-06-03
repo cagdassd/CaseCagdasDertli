@@ -10,9 +10,7 @@ namespace Business.Abstract
 {
 	public interface IProductService
 	{
-		ApiResponse<List<ProductDto>> GetAll2();
-		ApiResponse<List<ProductDto>> GetAllByCategory2(string categoryName);
-		List<ProductDto> GetAll();
-		List<ProductDto> GetAllByCategory(string categoryName);
+		ApiResponse<List<ProductDto>> GetAll();
+		ApiResponse<List<ProductDto>> GetAllByCategory(string categoryName);
 	}
 }

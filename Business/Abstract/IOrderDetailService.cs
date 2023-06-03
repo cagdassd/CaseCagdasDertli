@@ -10,6 +10,6 @@ namespace Business.Abstract
 {
 	public interface IOrderDetailService
 	{
-		public int AddOrderDetail(OrderDetail orderDetail,int productId);
+		public int AddOrderDetail(OrderDetail orderDetail,int orderId);
 	}
 }

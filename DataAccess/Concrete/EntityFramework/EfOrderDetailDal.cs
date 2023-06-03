@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
 	public class EfOrderDetailDal : IOrderDetailDal
 	{
-		public int AddOrder(OrderDetail orderDetail, int productId)
+		public int AddOrder(OrderDetail orderDetail, int orderId)
 		{
 			using (Context context = new Context())
 			{
@@ -23,7 +23,7 @@ namespace DataAccess.Concrete.EntityFramework
 				orderDetail.OrderId = productId;
 				*/
 
-				orderDetail.OrderId= productId;
+				orderDetail.OrderId= orderId;
 				var addedEntity2 = context.Entry(orderDetail);
 				addedEntity2.State = EntityState.Added;
 				context.SaveChanges();
