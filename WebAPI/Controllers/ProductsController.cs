@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
 			}
 			if (!string.IsNullOrEmpty(CategoryName))
 			{
-				var result = pm.GetAllByCategory2(CategoryName);
+				var result = pm.GetAllByCategory(CategoryName);
 
 				_cache.Set(cacheKey, result, TimeSpan.FromMinutes(60));
 
@@ -51,7 +51,7 @@ namespace WebAPI.Controllers
 			}
 			else
 			{
-				var result = pm.GetAll2();
+				var result = pm.GetAll();
 
 				_cache.Set(cacheKey, result, TimeSpan.FromMinutes(60));
 

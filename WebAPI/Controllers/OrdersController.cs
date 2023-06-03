@@ -6,10 +6,11 @@ using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using WebAPI.RabbitMQ;
 
 namespace WebAPI.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class OrdersController : ControllerBase
 	{
@@ -36,6 +37,7 @@ namespace WebAPI.Controllers
 			foreach (var item in cor)
 			{
 
+
 				var orderInfo = _mapper.Map<Order>(item);
 				var AddOrder = orderManager.AddOrder(orderInfo);
 
@@ -43,6 +45,19 @@ namespace WebAPI.Controllers
 				var OrderDetailId = orderDetailManager.AddOrderDetail(orderDetailInfo, AddOrder);
 
 				orderDetailIds.Add(OrderDetailId);
+
+
+
+				string rabbitMQConnectionUrl = "amqps://pfrxyapi:bfeX09-lnmiLAHZzeRDltpcFswm_z8zv@cow.rmq2.cloudamqp.com/pfrxyapi";
+				RabbitMQService rabbitMQService = new RabbitMQService(rabbitMQConnectionUrl);
+				
+				string receiver = item.CustomerEmail;
+				string subject = "Sipariş Biliginiz";
+				string content = "Bizi tercih ettiğiniz için teşekkür ederiz.";
+
+				rabbitMQService.SendMailMessage(receiver, subject, content);
+
+				
 			}
 			
 			return Ok(orderDetailIds.ToArray());

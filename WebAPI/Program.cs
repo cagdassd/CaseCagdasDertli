@@ -6,7 +6,6 @@
 using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
-using Business.DependencyResolvers;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
