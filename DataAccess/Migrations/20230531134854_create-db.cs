@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
+    /*
     /// <inheritdoc />
     public partial class createdb : Migration
     {
@@ -97,4 +98,5 @@ namespace DataAccess.Migrations
                 name: "Products");
         }
     }
+    */
 }
