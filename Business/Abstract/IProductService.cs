@@ -12,5 +12,8 @@ namespace Business.Abstract
 	{
 		ApiResponse<List<ProductDto>> GetAll();
 		ApiResponse<List<ProductDto>> GetAllByCategory(string categoryName);
+
+
+		void Add(Product product);
 	}
 }

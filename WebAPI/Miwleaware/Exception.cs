@@ -1,6 +1,5 @@
 ﻿using Entities.Concrete;
 using System.Net;
-using WebAPI.Controllers;
 
 namespace WebAPI.Miwleaware
 {
@@ -23,7 +22,7 @@ namespace WebAPI.Miwleaware
 				}
 				catch (System.Exception ex)
 				{
-                    _logger.LogError(ex.Message);
+					_logger.LogError(ex.Message);
 					await HandleExceptionAsync(httpContext, ex);
 				}
 			}

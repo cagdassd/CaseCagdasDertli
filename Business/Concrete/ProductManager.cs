@@ -13,13 +13,12 @@ namespace Business.Concrete
 		public ProductManager(IProductDal productDal)
 		{
 			_productDal = productDal;
-
-
 		}
 
-
-
-
+		public void Add(Product product)
+		{
+			_productDal.Add(product);
+		}
 
 		public ApiResponse<List<ProductDto>> GetAll()
 		{

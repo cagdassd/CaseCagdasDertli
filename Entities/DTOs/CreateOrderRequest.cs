@@ -1,11 +1,4 @@
-﻿using Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entities.DTOs
+﻿namespace Entities.DTOs
 {
 	public class CreateOrderRequest
 	{
@@ -15,7 +8,5 @@ namespace Entities.DTOs
 		public int ProductId { get; set; }
 		public int UnitPrice { get; set; }
 		public int Amount { get; set; }
-
-
 	}
 }

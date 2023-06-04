@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Concrete
 {
 	public class Product
 	{
 		[Key]
-		public int Id  { get; set; }
+		public int Id { get; set; }
 		public string ProductDescription { get; set; }
 		public string Category { get; set; }
 		public int Unit { get; set; }

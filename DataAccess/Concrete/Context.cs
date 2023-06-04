@@ -26,7 +26,7 @@ namespace DataAccess.Concrete
 		{
 			if (!optionsBuilder.IsConfigured)
 			{
-				optionsBuilder.UseMySql("server=localhost;port=3306;database=Case;user=root;password=aA123456.", new MySqlServerVersion(new Version(8, 0, 26)));
+				optionsBuilder.UseMySql("server=127.0.0.1;port=3306;database=CagdasDertliCase;user=root;password=aA123456.", new MySqlServerVersion(new Version(8, 0, 26)));
 			}
 		}
 

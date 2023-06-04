@@ -1,5 +1,6 @@
 ﻿
 using DataAccess.Abstract;
+using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +14,18 @@ namespace DataAccess.Concrete.EntityFramework
 {
 	public class EfProductDal : IProductDal
 	{
+
+
+		public void Add(Product product)
+		{
+			using (Context context = new Context())
+			{
+				var addedEntity = context.Entry(product);
+				addedEntity.State = EntityState.Added;
+				context.SaveChanges();
+			}
+		}
+
 
 		public List<ProductDto> GetProductDetails()
 		{

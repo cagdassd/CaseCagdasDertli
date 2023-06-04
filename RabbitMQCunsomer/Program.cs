@@ -1,11 +1,10 @@
-﻿using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System.Net.Mail;
-using System.Net;
-using System.Text;
-using Entities.Concrete;
+﻿using Entities.Concrete;
 using Newtonsoft.Json;
-
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 
 internal class Program
 {
@@ -18,7 +17,7 @@ internal class Program
 
 		var channel = connection.CreateModel();
 
-		channel.QueueDeclare("mail_queue", true, false, false,null);
+		channel.QueueDeclare("mail_queue", true, false, false, null);
 
 		var consumer = new EventingBasicConsumer(channel);
 		channel.BasicConsume("mail_queue", true, consumer);

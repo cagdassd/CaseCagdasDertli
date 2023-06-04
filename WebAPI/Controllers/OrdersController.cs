@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
 
 				mailModel.Reciever = item.CustomerEmail;
 				mailModel.Subject = "Sipariş Biliginiz";
-				mailModel.Content = "Sayın " + item.CustomerName + ", Ürün numarası "+ item.ProductId + ", Olan Siparişinizin Fiyatı: " + item.UnitPrice + "'dır bizi tercih ettiğiniz icin teşekkür ederiz.";
+				mailModel.Content = "Sayın " + item.CustomerName + ", Ürün numarası " + item.ProductId + ", Olan Siparişinizin Fiyatı: " + item.UnitPrice + "'dır bizi tercih ettiğiniz icin teşekkür ederiz.";
 
 				await Task.Run(() =>
 					{
@@ -76,7 +76,7 @@ namespace WebAPI.Controllers
 			response.ResultMessage = "Başarısız";
 			response.ErrorCode = "400";
 			return BadRequest(response);
-			
+
 		}
 
 	}

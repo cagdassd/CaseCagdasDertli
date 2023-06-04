@@ -7,7 +7,6 @@
 		{
 			return new MyCustomLogger();
 		}
-
 		public void Dispose()
 		{
 		}
@@ -28,7 +27,7 @@
 		public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
 		{
 
-			string logMessage = formatter(state,exception);
+			string logMessage = formatter(state, exception);
 
 			logMessage = $"[{DateTime.Now: dd.MM.yyyy HH:mm:ss}] - {logMessage}";
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -26,6 +27,12 @@ namespace WebAPI.Controllers
 		}
 
 
+		[HttpPost("add")]
+		public IActionResult Add(Product product)
+		{
+			pm.Add(product);
+			return Ok();
+		}
 
 		[HttpGet("getall")]
 		public IActionResult GetAll(string? CategoryName)

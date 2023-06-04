@@ -1,6 +1,4 @@
 ﻿using Entities.Concrete;
-using Entities.DTOs;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
@@ -29,8 +27,6 @@ namespace WebAPI.RabbitMQ
 				channel.QueueDeclare(queue: "mail_queue", durable: true, exclusive: false, autoDelete: false, arguments: null);
 
 				var message = mailModel;
-				
-
 				var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
 				channel.BasicPublish(exchange: "", routingKey: "mail_queue", basicProperties: null, body: body);
@@ -40,10 +36,10 @@ namespace WebAPI.RabbitMQ
 
 
 
-		
 
 
 
-		}
+
+	}
 
 }
