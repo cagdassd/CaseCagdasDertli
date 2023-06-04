@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
 Log.Logger = new LoggerConfiguration()
 	.WriteTo.Debug(Serilog.Events.LogEventLevel.Information)
+	.WriteTo.File("Logs.txt")
 	.CreateLogger();
 
 // Add services to the container.

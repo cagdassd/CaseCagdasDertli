@@ -34,8 +34,8 @@ internal class Program
 	}
 	public static void SendMail(MailModel model)
 	{
-		string adminMail = "caagdas@hotmail.com";
-		string adminPassword = "Cacod8624513!?";
+		string adminMail = "casecagdasdertli@hotmail.com";
+		string adminPassword = "Casecaco1!";
 		try
 		{
 
@@ -47,7 +47,7 @@ internal class Program
 		}
 		catch (Exception ex)
 		{
-			//loglama
+			
 		}
 	}
 }

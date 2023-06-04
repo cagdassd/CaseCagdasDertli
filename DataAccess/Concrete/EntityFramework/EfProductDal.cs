@@ -1,31 +1,11 @@
 ﻿
 using DataAccess.Abstract;
-using Entities.Concrete;
 using Entities.DTOs;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
 	public class EfProductDal : IProductDal
 	{
-
-
-		public void Add(Product product)
-		{
-			using (Context context = new Context())
-			{
-				var addedEntity = context.Entry(product);
-				addedEntity.State = EntityState.Added;
-				context.SaveChanges();
-			}
-		}
-
 
 		public List<ProductDto> GetProductDetails()
 		{
@@ -60,7 +40,7 @@ namespace DataAccess.Concrete.EntityFramework
 								 Unit = p.Unit,
 								 UnitPrice = p.UnitPrice
 							 };
-				return result.Where(x=>x.Category == CategoryName).ToList();
+				return result.Where(x => x.Category == CategoryName).ToList();
 			}
 		}
 	}

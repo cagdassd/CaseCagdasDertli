@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
-using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -24,14 +23,6 @@ namespace WebAPI.Controllers
 			_logger = logger;
 			_mapper = mapper;
 			_cache = cache;
-		}
-
-
-		[HttpPost("add")]
-		public IActionResult Add(Product product)
-		{
-			pm.Add(product);
-			return Ok();
 		}
 
 		[HttpGet("getall")]
@@ -62,8 +53,5 @@ namespace WebAPI.Controllers
 				return Ok(result);
 			}
 		}
-
-
-
 	}
 }
