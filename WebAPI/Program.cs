@@ -1,8 +1,13 @@
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using WebAPI.Loging;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
+
+
+
+
 Log.Logger = new LoggerConfiguration()
 	.WriteTo.Debug(Serilog.Events.LogEventLevel.Information)
 	.WriteTo.File("Logs.txt")
@@ -10,9 +15,18 @@ Log.Logger = new LoggerConfiguration()
 
 // Add services to the container.
 
+
+
+
+builder.Services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+builder.Services.AddStackExchangeRedisCache(redis =>
+{
+	redis.Configuration = "127.0.0.1:6379";
+});
+
+
+
 builder.Services.AddControllers();
-var provider = builder.Services.BuildServiceProvider();
-var configuration = provider.GetRequiredService<IConfiguration>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -23,6 +37,7 @@ builder.Services.AddLogging(i =>
 
 	i.AddProvider(new MyCustomLoggerFactory());
 });
+
 
 
 builder.Services.AddMemoryCache();

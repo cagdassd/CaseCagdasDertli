@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
 
 
 
-		[HttpPost("createorderrequest")]
+		[HttpPost("createorder")]
 		public async Task<IActionResult> AddAsync(List<CreateOrderRequest> cor)
 		{
 			_logger.LogInformation("Order İşlemi Başlatıldı");

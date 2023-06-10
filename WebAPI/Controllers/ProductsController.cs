@@ -1,8 +1,14 @@
 ﻿using AutoMapper;
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -11,45 +17,64 @@ namespace WebAPI.Controllers
 	public class ProductsController : ControllerBase
 	{
 		ProductManager pm = new ProductManager(new EfProductDal());
-
 		private readonly ILogger<ProductsController> _logger;
-		private readonly IMapper _mapper;
-		private readonly IMemoryCache _cache;
+		private readonly IDistributedCache _distributedCache;
 
-
-		public ProductsController(IMapper mapper, ILogger<ProductsController> logger, IMemoryCache cache)
+		public ProductsController(ILogger<ProductsController> logger, IDistributedCache distributedCache)
 		{
-
 			_logger = logger;
-			_mapper = mapper;
-			_cache = cache;
+			_distributedCache = distributedCache;
 		}
 
-		[HttpGet("getall")]
-		public IActionResult GetAll(string? CategoryName)
+		[HttpGet("getproducts")]
+		public async Task<IActionResult> GetAll(string? CategoryName)
 		{
 			_logger.LogInformation("GetAll metodu çağrıldı");
-			string cacheKey = "AllProducts";
-			if (_cache.TryGetValue(cacheKey, out var cachedResult))
-			{
-				_logger.LogInformation("Ürünler Önbellekten Listelendi");
-				return Ok(cachedResult);
+			string getAllCacheKey = "AllProducts";
+			string getAllByCategoryCacheKey = "GetAllProductsByCategory";
 
-			}
+
+			var getAllcachedResult = await _distributedCache.GetStringAsync(getAllCacheKey);
+			var GetAllByCategoryCachedResult = await _distributedCache.GetStringAsync(getAllByCategoryCacheKey);
+
+			
 			if (!string.IsNullOrEmpty(CategoryName))
 			{
-				var result = pm.GetAllByCategory(CategoryName);
+				if (string.IsNullOrEmpty(GetAllByCategoryCachedResult))
+				{
+					
+					var cachedResult = JsonConvert.DeserializeObject<ApiResponse<List<ProductDto>>>(GetAllByCategoryCachedResult);
+					_logger.LogInformation("Ürünler önbellekten listelendi");
+					return Ok(cachedResult);
+				}
 
-				_cache.Set(cacheKey, result, TimeSpan.FromMinutes(60));
-				_logger.LogInformation("Ürünler Listelendi");
+				var result = pm.GetAllByCategory(CategoryName);
+				var serializedResult = JsonConvert.SerializeObject(result);
+				await _distributedCache.SetStringAsync(getAllByCategoryCacheKey, serializedResult, new DistributedCacheEntryOptions
+				{
+					AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
+				});
+
+				_logger.LogInformation("Ürünler listelendi");
 				return Ok(result);
 			}
 			else
 			{
+				if (!string.IsNullOrEmpty(getAllcachedResult))
+				{
+					
+					var cachedResult = JsonConvert.DeserializeObject<ApiResponse<List<ProductDto>>>(getAllcachedResult);
+					_logger.LogInformation("Ürünler önbellekten listelendi");
+					return Ok(cachedResult);
+				}
 				var result = pm.GetAll();
-				_logger.LogInformation("Ürünler Listelendi");
-				_cache.Set(cacheKey, result, TimeSpan.FromMinutes(60));
+				var serializedResult = JsonConvert.SerializeObject(result);
+				await _distributedCache.SetStringAsync(getAllCacheKey, serializedResult, new DistributedCacheEntryOptions
+				{
+					AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
+				});
 
+				_logger.LogInformation("Ürünler listelendi");
 				return Ok(result);
 			}
 		}
