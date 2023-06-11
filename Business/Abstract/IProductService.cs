@@ -6,6 +6,5 @@ namespace Business.Abstract
 	public interface IProductService
 	{
 		ApiResponse<List<ProductDto>> GetAll();
-		//<List<ProductDto>> GetAllByCategory(string categoryName);
 	}
 }

@@ -32,7 +32,6 @@ namespace WebAPI.Controllers
 			_logger.LogInformation("GetAll metodu çağrıldı");
 			string getAllCacheKey = "AllProducts";
 
-
 			var getAllcachedResult = await _distributedCache.GetStringAsync(getAllCacheKey);
 
 			if (!string.IsNullOrEmpty(getAllcachedResult))

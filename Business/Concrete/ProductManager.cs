@@ -15,7 +15,6 @@ namespace Business.Concrete
 			_productDal = productDal;
 		}
 
-
 		public ApiResponse<List<ProductDto>> GetAll()
 		{
 			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
@@ -35,29 +34,6 @@ namespace Business.Concrete
 				response.ErrorCode = "500";
 				return response;
 			}
-		}
-		/*
-		public ApiResponse<List<ProductDto>> GetAllByCategory(string categoryName)
-		{
-			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
-			response.Data = _productDal.GetProductDetails(categoryName);
-
-			if (!response.Data.IsNullOrEmpty())
-			{
-				response.ResultMessage = "Ürünler Kategoriye Göre Başarıyla Listelendi";
-				response.Status = Status.Success;
-				response.ErrorCode = "200";
-				return response;
-			}
-			else
-			{
-				response.ResultMessage = "Ürünler Listelenirken Hata Oluştu";
-				response.Status = Status.Failed;
-				response.ErrorCode = "500";
-				return response;
-			}
-		}
-		*/
-
+		}		
 	}
 }
