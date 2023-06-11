@@ -26,7 +26,7 @@ namespace DataAccess.Concrete.EntityFramework
 				return result.ToList();
 			}
 		}
-
+		/*
 		public List<ProductDto> GetProductDetails(string CategoryName)
 		{
 			using (Context context = new Context())
@@ -43,5 +43,7 @@ namespace DataAccess.Concrete.EntityFramework
 				return result.Where(x => x.Category == CategoryName).ToList();
 			}
 		}
+
+		*/
 	}
 }

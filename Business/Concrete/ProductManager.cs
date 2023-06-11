@@ -36,11 +36,11 @@ namespace Business.Concrete
 				return response;
 			}
 		}
-
+		/*
 		public ApiResponse<List<ProductDto>> GetAllByCategory(string categoryName)
 		{
 			ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
-			response.Data = _productDal.GetProductDetails();
+			response.Data = _productDal.GetProductDetails(categoryName);
 
 			if (!response.Data.IsNullOrEmpty())
 			{
@@ -57,7 +57,7 @@ namespace Business.Concrete
 				return response;
 			}
 		}
-
+		*/
 
 	}
 }

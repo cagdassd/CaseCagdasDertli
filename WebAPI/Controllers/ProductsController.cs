@@ -31,52 +31,37 @@ namespace WebAPI.Controllers
 		{
 			_logger.LogInformation("GetAll metodu çağrıldı");
 			string getAllCacheKey = "AllProducts";
-			string getAllByCategoryCacheKey = "GetAllProductsByCategory";
 
 
 			var getAllcachedResult = await _distributedCache.GetStringAsync(getAllCacheKey);
-			var GetAllByCategoryCachedResult = await _distributedCache.GetStringAsync(getAllByCategoryCacheKey);
 
-			
-			if (!string.IsNullOrEmpty(CategoryName))
+			if (!string.IsNullOrEmpty(getAllcachedResult))
 			{
-				if (string.IsNullOrEmpty(GetAllByCategoryCachedResult))
+				var cachedResult = JsonConvert.DeserializeObject<ApiResponse<List<ProductDto>>>(getAllcachedResult);
+
+				if (!string.IsNullOrEmpty(CategoryName))
 				{
-					
-					var cachedResult = JsonConvert.DeserializeObject<ApiResponse<List<ProductDto>>>(GetAllByCategoryCachedResult);
-					_logger.LogInformation("Ürünler önbellekten listelendi");
-					return Ok(cachedResult);
+					cachedResult.Data = cachedResult.Data.Where(x => x.Category == CategoryName).ToList();
 				}
+					
 
-				var result = pm.GetAllByCategory(CategoryName);
-				var serializedResult = JsonConvert.SerializeObject(result);
-				await _distributedCache.SetStringAsync(getAllByCategoryCacheKey, serializedResult, new DistributedCacheEntryOptions
-				{
-					AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
-				});
-
-				_logger.LogInformation("Ürünler listelendi");
-				return Ok(result);
+				_logger.LogInformation("Ürünler önbellekten listelendi");
+				return Ok(cachedResult);
 			}
 			else
 			{
-				if (!string.IsNullOrEmpty(getAllcachedResult))
-				{
-					
-					var cachedResult = JsonConvert.DeserializeObject<ApiResponse<List<ProductDto>>>(getAllcachedResult);
-					_logger.LogInformation("Ürünler önbellekten listelendi");
-					return Ok(cachedResult);
-				}
 				var result = pm.GetAll();
 				var serializedResult = JsonConvert.SerializeObject(result);
 				await _distributedCache.SetStringAsync(getAllCacheKey, serializedResult, new DistributedCacheEntryOptions
 				{
 					AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
 				});
-
+				if (!string.IsNullOrEmpty(CategoryName)) result.Data = result.Data.Where(x => x.Category == CategoryName).ToList();
 				_logger.LogInformation("Ürünler listelendi");
 				return Ok(result);
 			}
+
 		}
+		
 	}
 }

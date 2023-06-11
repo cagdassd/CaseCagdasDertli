@@ -6,6 +6,6 @@ namespace DataAccess.Abstract
 	{
 
 		public List<ProductDto> GetProductDetails();
-		public List<ProductDto> GetProductDetails(string CategoryName);
+		//public List<ProductDto> GetProductDetails(string CategoryName);
 	}
 }
